@@ -1,0 +1,18 @@
+localhost:443 {
+  tls self_signed
+
+  root client
+
+  proxy /api http://localhost:3000
+
+  header /api {
+    Access-Control-Allow-Origin  *
+    Content-Type: application/json
+    Accept: application/json
+  }
+
+  redir 301 {
+    if {>X-Forwarded-Proto} is http
+    /  https://{host}{uri}
+  }
+}
